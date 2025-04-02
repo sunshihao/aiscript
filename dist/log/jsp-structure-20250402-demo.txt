@@ -1,4 +1,0 @@
-File: old.jsp
-Directory: /Users/ssh/Home/workspace/ZKY/demo-ai/demo
-Full Path: /Users/ssh/Home/workspace/ZKY/demo-ai/demo/old.jsp
--------------------
