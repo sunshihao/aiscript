@@ -3,7 +3,7 @@ const path = require('path');
 
 // 配置目标目录路径
 const CONFIG = {
-	targetDirectory: '/Users/ssh/Home/workspace/ZKY/demo-ai/demo', // 扫描目录
+	targetDirectory: '/Users/ssh/Home/workspace/ZKY/demo-ai/source/approve', // 扫描目录
 	outputDirectory: '/Users/ssh/Home/workspace/ZKY/demo-ai/dist/matched-jsp' // 匹配文件的复制目标目录
 };
 

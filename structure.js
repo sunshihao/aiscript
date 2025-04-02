@@ -248,6 +248,12 @@ function processButtonPositions(content) {
         `</form>\n<div class="z-page-action z-btn-define">${actionButtonsHtml}</div>`
       );
     }
+  } else {
+    // 如果没有操作按钮，删除空的acationArea div
+    updatedContent = updatedContent.replace(
+      /<div\s+id="acationArea"\s+class="z-page-action\s+z-btn-define">\s*<\/div>\s*/gi,
+      ''
+    );
   }
   
   return updatedContent;
