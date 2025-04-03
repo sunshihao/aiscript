@@ -51,10 +51,21 @@ function addPageStructure(content) {
   
   // 添加z-page-home结构
   if (!updatedContent.includes('z-page-home')) {
+    // 修改正则表达式以适应更多情况
     updatedContent = updatedContent.replace(
-      '<body>',
-      `<body>\n<div class="z-page-home">\n    <div class="z-page-title">仪器信息浏览</div>`
+      /<body[^>]*>/i,
+      (match) => `${match}\n<div class="z-page-home">\n    <div class="z-page-title"></div>`
     );
+    
+    // 如果没有找到body标签，则在文件开头添加
+    if (!updatedContent.match(/<body[^>]*>/i)) {
+      updatedContent = `<body>\n<div class="z-page-home">\n    <div class="z-page-title"></div>\n${updatedContent}`;
+    }
+    
+    // 确保在文件末尾关闭div标签
+    if (!updatedContent.includes('</div></div></body>')) {
+      updatedContent = updatedContent.replace('</body>', '</div></div></body>');
+    }
   }
   
   return updatedContent;
@@ -78,7 +89,7 @@ function processFormStructure(content) {
   updatedContent = updatedContent.replace(
     /(<form[^>]*>)([\s\S]*?)(<\/form>)/gi,
     (match, formStart, formContent, formEnd) => {
-      return `${formStart}${formContent}${formEnd}\n<div id="acationArea" class="z-page-action z-btn-define"></div>`;
+      return `${formStart}${formContent}${formEnd}\n<div id="actionArea" class="z-page-action z-btn-define"></div>`;
     }
   );
   
@@ -231,27 +242,27 @@ function processButtonPositions(content) {
   if (allActionButtons.length > 0) {
     const actionButtonsHtml = allActionButtons.map(btn => btn.html).join('\n');
     
-    // 查找z-page-action div
-    const actionDivRegex = /<div\s+class="z-page-action\s+z-btn-define"[^>]*>([\s\S]*?)(<\/div>)/i;
+    // 查找id为actionArea的div
+    const actionDivRegex = /<div\s+id="actionArea"[^>]*>([\s\S]*?)(<\/div>)/i;
     const actionDivMatch = updatedContent.match(actionDivRegex);
     
     if (actionDivMatch) {
-      // 将操作按钮添加到现有的z-page-action div中
+      // 将操作按钮添加到现有的actionArea div中
       updatedContent = updatedContent.replace(
         actionDivRegex,
-        `<div class="z-page-action z-btn-define">${actionDivMatch[1]}${actionButtonsHtml}$2`
+        `<div id="actionArea" class="z-page-action z-btn-define">${actionDivMatch[1]}${actionButtonsHtml}$2`
       );
     } else {
-      // 在form后创建新的z-page-action div
+      // 在form后创建新的actionArea div
       updatedContent = updatedContent.replace(
         /<\/form>/i,
-        `</form>\n<div class="z-page-action z-btn-define">${actionButtonsHtml}</div>`
+        `</form>\n<div id="actionArea" class="z-page-action z-btn-define">${actionButtonsHtml}</div>`
       );
     }
   } else {
     // 如果没有操作按钮，删除空的acationArea div
     updatedContent = updatedContent.replace(
-      /<div\s+id="acationArea"\s+class="z-page-action\s+z-btn-define">\s*<\/div>\s*/gi,
+      /<div\s+id="actionArea"\s+class="z-page-action\s+z-btn-define">\s*<\/div>\s*/gi,
       ''
     );
   }
