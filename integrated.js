@@ -5,7 +5,7 @@ const path = require('path');
 
 // 配置目标目录路径
 const CONFIG = {
-  targetDirectory: '/Users/ssh/Home/workspace/ZKY/demo-ai/source/approve', // 扫描目录
+  targetDirectory: '/Users/ssh/Home/workspace/ZKY/demo-ai/source/sams/common', // 扫描目录
   backupSuffix: '-old', // 备份文件的后缀
   logDir: '/Users/ssh/Home/workspace/ZKY/demo-ai/dist/log' // 日志目录
 };
